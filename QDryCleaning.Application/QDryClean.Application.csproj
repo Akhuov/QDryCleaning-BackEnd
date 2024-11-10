@@ -7,12 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\QDryClean.Infrastructure\QDryClean.Infrastructure.csproj" />
     <ProjectReference Include="..\QDryCleaning.Domain\QDryClean.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Dtos\" />
+    <Folder Include="UseCases\Orders\Querries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="11.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
   </ItemGroup>
 
 </Project>
