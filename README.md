@@ -5,6 +5,6 @@ Plans and Notes for this project ->
 ![photo_2024-11-10_23-49-35](https://github.com/user-attachments/assets/758a308f-9b50-49bd-b874-b2358480460f)
 ![photo_2024-05-05_13-45-51](https://github.com/user-attachments/assets/2dad7cd6-ef9f-41da-b702-409d9a42e491)
 
-##Project Overview
+## Project Overview
 This is an automation project for our family-owned dry cleaners. Since it is designed for a single small dry cleaner with a limited budget, all UI services and the database will be hosted on a local server, with the main computer in the office functioning as the server
 
