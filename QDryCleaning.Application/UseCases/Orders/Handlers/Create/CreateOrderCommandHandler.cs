@@ -21,8 +21,8 @@ namespace QDryClean.Application.UseCases.Orders.Handlers.Create
             {
                 var order = new Domain.Entities.Order()
                 {
-                    Name = request.Name,
-                    Description = request.Description,
+                    ReceiptNumber = request.ReceiptNumber,
+                    CustomerId = request.CustomerId,
                 };
                 
                 await _applicationDbContext.Orders.AddAsync(order);

@@ -11,8 +11,8 @@ using QDryClean.Infrastructure.Persistance;
 namespace QDryClean.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241110202300_Init")]
-    partial class Init
+    [Migration("20250906081941_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,12 +32,17 @@ namespace QDryClean.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Description")
+                    b.Property<string>("CreatedAt")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ReceiptNumber")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UpdatedAt")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

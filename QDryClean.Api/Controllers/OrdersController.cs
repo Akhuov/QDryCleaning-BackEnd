@@ -27,8 +27,8 @@ namespace QDryClean.Api.Controllers
             {
                 var command = new CreateOrderCommand
                 {
-                    Name = order.Name,
-                    Description = order.Description,
+                    ReceiptNumber = order.ReceiptNumber,
+                    CustomerId = order.CustomerId
 
                 };
                 await _mediator.Send(command);
