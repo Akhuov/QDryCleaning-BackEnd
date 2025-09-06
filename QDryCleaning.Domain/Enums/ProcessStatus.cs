@@ -1,6 +1,6 @@
 ﻿namespace QDryClean.Domain.Enums
 {
-    public enum OrderStatus
+    public enum ProcessStatus
     {
         Created = 0,
         Accepted = 1,
