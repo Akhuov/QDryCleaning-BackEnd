@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using QDryClean.Domain.Entities;
-using QDryClean.Domain.Enums;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
