@@ -4,9 +4,8 @@
     {
         Created = 0,
         Accepted = 1,
-        Packed = 2,
-        Completed = 3,
-        Shipped = 4,
-        Donated = 5,
+        Completed = 2,
+        Closed = 3,
+        Donated = 4,
     }
 }
