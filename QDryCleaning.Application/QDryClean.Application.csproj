@@ -11,8 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Dtos\" />
     <Folder Include="UseCases\Orders\Querries\" />
+    <Folder Include="UseCases\Users\Handlers\" />
   </ItemGroup>
 
   <ItemGroup>

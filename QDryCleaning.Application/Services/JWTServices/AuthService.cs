@@ -27,7 +27,7 @@ namespace QDryClean.Application.Services.JWTServices
                 throw new UnauthorizedAccessException("Invalid password.");
             }
 
-            return _tokenService.GenerateToken(user);
+            return _tokenService.GenerateToken(user.Id, user.UserRole);
         }
     }
 }
