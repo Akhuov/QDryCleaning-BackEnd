@@ -3,7 +3,7 @@ using QDryClean.Domain.Entities;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
-namespace QDryClean.Application.Services
+namespace QDryClean.Application.Services.JWTServices
 {
     public class TokenService : ITokenService
     {
