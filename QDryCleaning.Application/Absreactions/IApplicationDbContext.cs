@@ -5,6 +5,7 @@ namespace QDryClean.Application.Absreactions
 {
     public interface IApplicationDbContext
     {
+        public DbSet<User> Users { get; set; }  
         public DbSet<Order> Orders { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Invoice> OrderInvoices { get; set; }
