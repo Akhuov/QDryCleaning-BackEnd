@@ -13,6 +13,8 @@
   <ItemGroup>
     <Folder Include="Dtos\" />
     <Folder Include="UseCases\Orders\Querries\" />
+    <Folder Include="UseCases\Users\Handlers\" />
+    <Folder Include="UseCases\Users\Quarries\" />
   </ItemGroup>
 
   <ItemGroup>
