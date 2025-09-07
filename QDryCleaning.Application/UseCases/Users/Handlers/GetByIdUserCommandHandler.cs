@@ -17,19 +17,8 @@ namespace QDryClean.Application.UseCases.Users.Handlers
 
         public async Task<User> Handle(GetByIdUserCommand request, CancellationToken cancellationToken)
         {
-            try
-            {
-                var user = await _applicationDbContext.Users.FirstOrDefaultAsync(u => u.Id == request.Id, cancellationToken);
-                if (user is not null)
-                {
-                    return user;
-                }
-                return new User();
-            }
-            catch (Exception)
-            {
-                return new User();
-            }
+            return await _applicationDbContext.Users
+                .FirstOrDefaultAsync(u => u.Id == request.Id, cancellationToken);
         }
     }
 }
