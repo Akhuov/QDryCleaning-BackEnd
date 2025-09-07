@@ -3,6 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using QDryClean.Api.Middlewares;
 using QDryClean.Application;
+using QDryClean.Application.Services.JWTServices;
 using QDryClean.Infrastructure;
 using System.Text;
 
@@ -14,10 +15,12 @@ builder.Services.AddAplication();
 
 //Memory Cache (didn't use yet)
 builder.Services.AddMemoryCache();
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 builder.Services.AddControllers();
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {

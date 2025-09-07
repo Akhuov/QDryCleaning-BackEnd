@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
-using QDryClean.Domain.Entities;
+using QDryClean.Domain.Enums;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
@@ -12,12 +12,12 @@ namespace QDryClean.Application.Services.JWTServices
         {
             _config = config;
         }
-        public string GenerateToken(User user)
+        public string GenerateToken(int id,UserRole role)
         {
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-                new Claim(ClaimTypes.Role, user.UserRole.ToString())
+                new Claim(JwtRegisteredClaimNames.Sub, id.ToString()),
+                new Claim(ClaimTypes.Role, role.ToString())
             };
 
             var key = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
