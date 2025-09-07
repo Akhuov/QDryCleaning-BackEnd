@@ -4,11 +4,13 @@ namespace QDryClean.Domain.Entities
 {
     public class Order : Auditable
     {
-        public int ReceiptNumber { get; set; }
+        public required int ReceiptNumber { get; set; }
+        public required ProcessStatus ProcessStatus { get; set; }
+        public required DateOnly ExpectedCompletionDate { get; set; }
         public int CustomerId { get; set; }
-        //public Customer Customer { get; set; } 
-        //public OrderStatus Status { get; set; }
-        //public ICollection<Item> Items { get; set; } = new List<Item>();
-        //public OrderCharge OrderCharge { get; set; }
+        public Customer Customer { get; set; }
+        public Invoice Invoice { get; set; }
+        public string Notes { get; set; } = null;
+        public ICollection<Item> Items { get; set; } = new List<Item>();
     }
 }
