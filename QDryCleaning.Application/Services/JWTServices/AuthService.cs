@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using QDryClean.Application.Absreactions;
 
-namespace QDryClean.Application.Services
+namespace QDryClean.Application.Services.JWTServices
 {
     public class AuthService : IAuthService
     {
