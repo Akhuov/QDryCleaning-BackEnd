@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using QDryClean.Api.Middlewares;
 using QDryClean.Application;
 using QDryClean.Infrastructure;
 using System.Text;
@@ -65,6 +66,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 
 var app = builder.Build();
+
+app.UseMiddleware<ErrorHandlingMiddleware>();
 
 
 if (app.Environment.IsDevelopment())
