@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using QDryClean.Application.Absreactions;
 using QDryClean.Application.UseCases.Orders.Commands;
+using QDryClean.Domain.Entities;
 
 namespace QDryClean.Application.UseCases.Orders.Handlers.Create
 {
@@ -19,10 +20,12 @@ namespace QDryClean.Application.UseCases.Orders.Handlers.Create
 
             try
             {
-                var order = new Domain.Entities.Order()
+                var order = new Order()
                 {
+                    ProcessStatus = Domain.Enums.ProcessStatus.Created,
                     ReceiptNumber = request.ReceiptNumber,
                     CustomerId = request.CustomerId,
+                    ExpectedCompletionDate = DateOnly.FromDateTime(DateTime.Now.AddDays(3))
                 };
                 
                 await _applicationDbContext.Orders.AddAsync(order);
