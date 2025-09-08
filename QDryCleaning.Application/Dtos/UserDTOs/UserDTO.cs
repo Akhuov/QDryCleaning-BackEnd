@@ -1,9 +1,13 @@
-﻿using MediatR;
-using QDryClean.Domain.Enums;
+﻿using QDryClean.Domain.Enums;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace QDryClean.Application.UseCases.Users.Commands
+namespace QDryClean.Application.Dtos.UserDTOs
 {
-    public class CreateUserCommand : IRequest<bool>
+    public class UserDTO
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

@@ -12,7 +12,7 @@ using QDryClean.Infrastructure.Persistance;
 namespace QDryClean.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250908064220_Init")]
+    [Migration("20250908065810_Init")]
     partial class Init
     {
         /// <inheritdoc />
