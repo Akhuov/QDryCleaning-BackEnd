@@ -50,7 +50,7 @@ namespace QDryClean.Api.Controllers
                 
         }
         [HttpGet]
-        [Authorize(Roles = nameof(UserRole.Receptionist))]
+        [Authorize(Roles = $"{nameof(UserRole.Receptionist)}, {nameof(UserRole.Admin)}")]
         public async Task<IActionResult> GetAllUsersAsync()
         {
             var users = await _mediator.Send(new GetAllUsersCommand());
