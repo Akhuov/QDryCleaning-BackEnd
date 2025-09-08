@@ -20,54 +20,32 @@ namespace QDryClean.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateUserAsync(UserDTO dto)
         {
-            try
+            var command = new CreateUserCommand
             {
-                var command = new Application.UseCases.Users.Commands.CreateUserCommand
-                {
-                    FirstName = dto.FirstName,
-                    LastName = dto.LastName,
-                    LogIn = dto.LogIn,
-                    Password = dto.Password,
-                    UserRole = dto.UserRole,
-                };
-                var result = await _mediator.Send(command);
-                if (result)
-                {
-                    return Ok("User created successfully.");
-                }
-                else
-                {
-                    return BadRequest("Failed to create user.");
-                }
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+                FirstName = dto.FirstName,
+                LastName = dto.LastName,
+                LogIn = dto.LogIn,
+                Password = dto.Password,
+                UserRole = dto.UserRole,
+            };
+            
+            var result = await _mediator.Send(command);
+            if (result)
+                return Ok("User created successfully.");
+            return BadRequest("Failed to create user.");
         }
         [HttpDelete]
         public async Task<IActionResult> DeleteUserAsync(int userId)
         {
-            try
+            var command = new DeleteUserCommand
             {
-                var command = new DeleteUserCommand
-                {
-                    Id = userId
-                };
-                var result = await _mediator.Send(command);
-                if (result)
-                {
-                    return Ok("User deleted successfully.");
-                }
-                else
-                {
-                    return BadRequest("Failed to delete user.");
-                }
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+               Id = userId
+            };
+            var result = await _mediator.Send(command);
+            if (result)
+                return Ok("User deleted successfully.");
+            return BadRequest("Failed to delete user.");
+                
         }
         [HttpGet]
         public async Task<IActionResult> GetAllUsersAsync()
@@ -78,51 +56,28 @@ namespace QDryClean.Api.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateUserAsync(UserDTO dto)
         {
-            try
+            var command = new UpdateUserCommand
             {
-                var command = new UpdateUserCommand
-                {
-                    FirstName = dto.FirstName,
-                    LastName = dto.LastName,
-                    LogIn = dto.LogIn,
-                    Password = dto.Password,
-                    UserRole = dto.UserRole,
-                };
-                var result = await _mediator.Send(command);
-                if (result)
-                {
-                    return Ok("User updated successfully.");
-                }
-                else
-                {
-                    return BadRequest("Failed to update user.");
-                }
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+                FirstName = dto.FirstName,
+                LastName = dto.LastName,
+                LogIn = dto.LogIn,
+                Password = dto.Password,
+                UserRole = dto.UserRole,
+            };
+
+            var result = await _mediator.Send(command);
+            if (result)
+                return Ok("User updated successfully.");
+            return BadRequest("Failed to update user.");
         }
         [HttpGet("{userId:int}")]
         public async Task<IActionResult> GetUserByIdAsync(int userId)
         {
-            try
-            {
-                var query = new GetByIdUserCommand { Id = userId };
-                var user = await _mediator.Send(query);
-                if (user != null)
-                {
-                    return Ok(user);
-                }
-                else
-                {
-                    return NotFound("User not found.");
-                }
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var query = new GetByIdUserCommand { Id = userId };
+            var user = await _mediator.Send(query);
+            if (user != null)
+                return Ok(user);
+            return NotFound("User not found.");
         }
     }
 }
