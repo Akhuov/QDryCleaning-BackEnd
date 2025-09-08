@@ -22,7 +22,9 @@ namespace QDryClean.Application.UseCases.Users.Handlers
                     LastName = request.LastName,
                     LogIn = request.LogIn,
                     Password = request.Password,
-                    UserRole = request.UserRole
+                    UserRole = request.UserRole,
+                    CreatedAt = DateTime.UtcNow,
+
                 };
                 await _applicationDbContext.Users.AddAsync(user, cancellationToken);
                 await _applicationDbContext.SaveChangesAsync(cancellationToken);

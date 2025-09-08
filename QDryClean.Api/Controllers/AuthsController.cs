@@ -19,22 +19,11 @@ namespace QDryClean.Api.Controllers
             _authService = authService;
         }
         [HttpPost]
-        public async Task<IActionResult> LoginAsync([FromForm] AuthDTO dto)
+        public async Task<IActionResult> LoginAsync(AuthDTO dto)
         {
-            try
-            {
-                var authService = new AuthService(_context, _tokenService);
-                var token = await _authService.LoginAsync(dto.LogIn, dto.Password);
-                return Ok(new { Token = token });
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                return Unauthorized(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+             var authService = new AuthService(_context, _tokenService);
+             var token = await _authService.LoginAsync(dto.LogIn, dto.Password);
+             return Ok(new { Token = token });
         }
 
     }

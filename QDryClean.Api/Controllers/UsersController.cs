@@ -1,9 +1,11 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using QDryClean.Application.Dtos.UserDTOs;
 using QDryClean.Application.UseCases.Users.Commands;
 using QDryClean.Application.UseCases.Users.Quarries;
+using QDryClean.Domain.Enums;
 
 namespace QDryClean.Api.Controllers
 {
@@ -48,24 +50,17 @@ namespace QDryClean.Api.Controllers
                 
         }
         [HttpGet]
+        [Authorize(Roles = nameof(UserRole.Receptionist))]
         public async Task<IActionResult> GetAllUsersAsync()
         {
             var users = await _mediator.Send(new GetAllUsersCommand());
             return Ok(users);
         }
         [HttpPut]
-        public async Task<IActionResult> UpdateUserAsync(UserDTO dto)
+        [Authorize(Roles = nameof(UserRole.Admin))]//now its only for Admin role
+        public async Task<IActionResult> UpdateUserAsync(UpdateUserCommand dto)
         {
-            var command = new UpdateUserCommand
-            {
-                FirstName = dto.FirstName,
-                LastName = dto.LastName,
-                LogIn = dto.LogIn,
-                Password = dto.Password,
-                UserRole = dto.UserRole,
-            };
-
-            var result = await _mediator.Send(command);
+            var result = await _mediator.Send(dto);
             if (result)
                 return Ok("User updated successfully.");
             return BadRequest("Failed to update user.");

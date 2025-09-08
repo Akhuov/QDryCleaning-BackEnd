@@ -26,6 +26,7 @@ namespace QDryClean.Application.UseCases.Users.Handlers
                     user.LogIn = request.LogIn;
                     user.Password = request.Password;
                     user.UserRole = request.UserRole;
+                    user.UpdatedAt = DateTime.UtcNow;
 
                     _applicationDbContext.Users.Update(user);
                     await _applicationDbContext.SaveChangesAsync(cancellationToken);
