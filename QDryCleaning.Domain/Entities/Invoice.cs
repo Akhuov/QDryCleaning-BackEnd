@@ -8,7 +8,7 @@ namespace QDryClean.Domain.Entities
         public required PaymentStatus PaymentStatus { get; set; }
         public string Notes { get; set; } = null;
         public decimal? Discount { get; set; }
-        public required int OrderId { get; set; }
+        public int OrderId { get; set; }
         public Order Order { get; set; }
 
     }
