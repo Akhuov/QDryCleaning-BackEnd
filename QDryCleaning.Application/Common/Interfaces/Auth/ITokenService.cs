@@ -1,7 +1,7 @@
 ﻿using QDryClean.Domain.Entities;
 using QDryClean.Domain.Enums;
 
-namespace QDryClean.Application.Services.JWTServices
+namespace QDryClean.Application.Common.Interfaces.Auth
 {
     public interface ITokenService
     {

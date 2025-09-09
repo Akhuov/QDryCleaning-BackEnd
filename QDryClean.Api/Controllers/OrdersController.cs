@@ -1,9 +1,8 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
+using QDryClean.Application.Dtos;
 using QDryClean.Application.UseCases.Orders.Commands;
-using QDryClean.Domain.Entities;
 
 namespace QDryClean.Api.Controllers
 {
@@ -22,7 +21,7 @@ namespace QDryClean.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateOrderAsync(Order order)
+        public async Task<IActionResult> CreateOrderAsync(OrderDto order)
         {
             try
             {
@@ -30,7 +29,6 @@ namespace QDryClean.Api.Controllers
                 {
                     ReceiptNumber = order.ReceiptNumber,
                     CustomerId = order.CustomerId
-
                 };
                 await _mediator.Send(command);
                 return Ok(order);

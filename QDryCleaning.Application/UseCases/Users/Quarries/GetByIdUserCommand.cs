@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using QDryClean.Application.Dtos.UserDTOs;
 using QDryClean.Domain.Entities;
 
 namespace QDryClean.Application.UseCases.Users.Quarries

@@ -1,6 +1,6 @@
-﻿namespace QDryClean.Application.Dtos.AuthDTOs
+﻿namespace QDryClean.Application.Dtos
 {
-    public class AuthDTO
+    public class AuthDto
     {
         public string LogIn { get; set; }
         public string Password { get; set; }

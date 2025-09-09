@@ -1,8 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using QDryClean.Application.Dtos.UserDTOs;
+using QDryClean.Application.Dtos;
 using QDryClean.Application.UseCases.Users.Commands;
 using QDryClean.Application.UseCases.Users.Quarries;
 using QDryClean.Domain.Enums;
@@ -19,8 +18,10 @@ namespace QDryClean.Api.Controllers
         {
             _mediator = mediator;
         }
+
+
         [HttpPost]
-        public async Task<IActionResult> CreateUserAsync(UserDTO dto)
+        public async Task<IActionResult> CreateUserAsync(UserDto dto)
         {
             var command = new CreateUserCommand
             {
@@ -30,25 +31,29 @@ namespace QDryClean.Api.Controllers
                 Password = dto.Password,
                 UserRole = dto.UserRole,
             };
-            
+
             var result = await _mediator.Send(command);
             if (result)
                 return Ok("User created successfully.");
             return BadRequest("Failed to create user.");
         }
+
+
         [HttpDelete]
         public async Task<IActionResult> DeleteUserAsync(int userId)
         {
             var command = new DeleteUserCommand
             {
-               Id = userId
+                Id = userId
             };
             var result = await _mediator.Send(command);
             if (result)
                 return Ok("User deleted successfully.");
             return BadRequest("Failed to delete user.");
-                
+
         }
+
+
         [HttpGet]
         [Authorize(Roles = nameof(UserRole.Receptionist))]
         public async Task<IActionResult> GetAllUsersAsync()
@@ -56,6 +61,8 @@ namespace QDryClean.Api.Controllers
             var users = await _mediator.Send(new GetAllUsersCommand());
             return Ok(users);
         }
+
+
         [HttpPut]
         [Authorize(Roles = nameof(UserRole.Admin))]//now its only for Admin role
         public async Task<IActionResult> UpdateUserAsync(UpdateUserCommand dto)
@@ -65,6 +72,8 @@ namespace QDryClean.Api.Controllers
                 return Ok("User updated successfully.");
             return BadRequest("Failed to update user.");
         }
+
+
         [HttpGet("{userId:int}")]
         public async Task<IActionResult> GetUserByIdAsync(int userId)
         {

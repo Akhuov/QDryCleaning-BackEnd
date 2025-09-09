@@ -1,8 +1,10 @@
-﻿using QDryClean.Application.Absreactions;
-using QDryClean.Infrastructure.Persistance;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using QDryClean.Application.Absreactions;
+using QDryClean.Application.Common.Interfaces.Services;
+using QDryClean.Infrastructure.Persistance;
+using QDryClean.Infrastructure.Services;
 
 namespace QDryClean.Infrastructure
 {
@@ -14,6 +16,9 @@ namespace QDryClean.Infrastructure
             {
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             });
+
+            services.AddHttpContextAccessor();
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
 
             return services;
         }

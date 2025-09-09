@@ -3,8 +3,9 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using QDryClean.Api.Middlewares;
 using QDryClean.Application;
-using QDryClean.Application.Services.JWTServices;
+using QDryClean.Application.Common.Interfaces.Auth;
 using QDryClean.Infrastructure;
+using QDryClean.Infrastructure.Services.JWT;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -74,7 +75,7 @@ app.UseMiddleware<ErrorHandlingMiddleware>();
 
 
 if (app.Environment.IsDevelopment())
-{
+{   
     app.UseSwagger();
     app.UseSwaggerUI();
 }
