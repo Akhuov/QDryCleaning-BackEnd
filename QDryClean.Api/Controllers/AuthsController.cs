@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using QDryClean.Application.Absreactions;
-using QDryClean.Application.Dtos.AuthDTOs;
-using QDryClean.Application.Services.JWTServices;
+using QDryClean.Application.Common.Interfaces.Auth;
+using QDryClean.Application.Dtos;
+using QDryClean.Infrastructure.Services.JWT;
 
 namespace QDryClean.Api.Controllers
 {
@@ -19,7 +20,7 @@ namespace QDryClean.Api.Controllers
             _authService = authService;
         }
         [HttpPost]
-        public async Task<IActionResult> LoginAsync(AuthDTO dto)
+        public async Task<IActionResult> LoginAsync(AuthDto dto)
         {
              var authService = new AuthService(_context, _tokenService);
              var token = await _authService.LoginAsync(dto.LogIn, dto.Password);

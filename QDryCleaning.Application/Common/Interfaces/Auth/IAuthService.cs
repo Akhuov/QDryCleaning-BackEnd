@@ -1,4 +1,4 @@
-﻿namespace QDryClean.Application.Services.JWTServices
+﻿namespace QDryClean.Application.Common.Interfaces.Auth
 {
     public interface IAuthService 
     {

@@ -1,13 +1,8 @@
 ﻿using QDryClean.Domain.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace QDryClean.Application.Dtos.UserDTOs
+namespace QDryClean.Application.Dtos
 {
-    public class UserDTO
+    public class UserDto
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
