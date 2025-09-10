@@ -11,6 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="UseCases\charges\Handlers\" />
+    <Folder Include="UseCases\charges\Quarries\" />
     <Folder Include="UseCases\Orders\Querries\" />
   </ItemGroup>
 
