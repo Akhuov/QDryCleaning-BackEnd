@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using QDryClean.Application.Absreactions;
+using QDryClean.Application.Exceptions;
 using QDryClean.Application.UseCases.Users.Quarries;
 using QDryClean.Domain.Entities;
 
@@ -17,8 +18,10 @@ namespace QDryClean.Application.UseCases.Users.Handlers
 
         public async Task<User> Handle(GetByIdUserCommand request, CancellationToken cancellationToken)
         {
-            return await _applicationDbContext.Users
-                .FirstOrDefaultAsync(u => u.Id == request.Id, cancellationToken);
+            var user = await _applicationDbContext.Users.FirstOrDefaultAsync(u => u.Id == request.Id, cancellationToken);
+            if(user is not null)
+                return user;
+            throw new BadRequestExeption($"User with ID {request.Id} not found.");
         }
     }
 }

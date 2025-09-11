@@ -1,9 +1,10 @@
 ﻿using MediatR;
+using QDryClean.Domain.Entities;
 using QDryClean.Domain.Enums;
 
 namespace QDryClean.Application.UseCases.Users.Commands
 {
-    public class UpdateUserCommand : IRequest<bool>
+    public class UpdateUserCommand : IRequest<User>
     {
         public int Id { get; set; } 
         public required string FirstName { get; set; }
