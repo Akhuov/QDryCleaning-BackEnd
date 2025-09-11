@@ -1,20 +1,24 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using QDryClean.Application.Absreactions;
+using QDryClean.Application.Common.Interfaces.Services;
+using QDryClean.Application.Exceptions;
 using QDryClean.Application.UseCases.Users.Commands;
+using QDryClean.Domain.Entities;
 
 namespace QDryClean.Application.UseCases.Users.Handlers
 {
-    public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, bool>
+    public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, User>
     {
         private readonly IApplicationDbContext _applicationDbContext;
-
-        public UpdateUserCommandHandler(IApplicationDbContext applicationDbContext)
+        private readonly ICurrentUserService _currentUserService;
+        public UpdateUserCommandHandler(IApplicationDbContext applicationDbContext, ICurrentUserService currentUserService)
         {
             _applicationDbContext = applicationDbContext;
+            _currentUserService = currentUserService;
         }
 
-        public async Task<bool> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
+        public async Task<User> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
             try
             {
@@ -27,16 +31,17 @@ namespace QDryClean.Application.UseCases.Users.Handlers
                     user.Password = request.Password;
                     user.UserRole = request.UserRole;
                     user.UpdatedAt = DateTime.UtcNow;
+                    user.UpdatedBy = _currentUserService.UserId;
 
                     _applicationDbContext.Users.Update(user);
                     await _applicationDbContext.SaveChangesAsync(cancellationToken);
-                    return true;
+                    return user;
                 }
-                return false;
+                throw new BadRequestExeption($"User with ID {request.Id} not found.");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return false;
+                throw new InternalServerExeption(ex.Message);
             }
         }
     }
