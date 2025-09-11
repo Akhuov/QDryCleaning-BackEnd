@@ -37,7 +37,7 @@ namespace QDryClean.Application.UseCases.Orders.Handlers.Create
                         PhoneNumber = "+998911111111",
                         AdditionalPhoneNumber = "001",
                         Points = 0,
-                        CreatedBy = int.Parse(_currentUserService.UserId),
+                        CreatedBy = _currentUserService.UserId,
                         CreatedAt = DateTime.Now
                     },
 
@@ -53,7 +53,7 @@ namespace QDryClean.Application.UseCases.Orders.Handlers.Create
 
                     ExpectedCompletionDate = DateOnly.FromDateTime(DateTime.Now.AddDays(3)),
                     CreatedAt = DateTime.Now,
-                    CreatedBy = int.Parse(_currentUserService.UserId),
+                    CreatedBy = _currentUserService.UserId,
                     Notes = "Some Note"
                 }; 
 
