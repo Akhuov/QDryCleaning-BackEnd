@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using QDryClean.Application.Absreactions;
+using QDryClean.Application.Exceptions;
 using QDryClean.Application.UseCases.Users.Commands;
 
 namespace QDryClean.Application.UseCases.Users.Handlers
@@ -27,9 +28,9 @@ namespace QDryClean.Application.UseCases.Users.Handlers
                 }
                 return false;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return false;
+                throw new InternalServerExeption(ex.Message);
             }
         }
     }

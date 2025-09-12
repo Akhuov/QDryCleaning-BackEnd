@@ -33,9 +33,7 @@ namespace QDryClean.Api.Controllers
             };
 
             var result = await _mediator.Send(command);
-            if (result)
-                return Ok("User created successfully.");
-            return BadRequest("Failed to create user.");
+            return Created("User created successfully.",result);
         }
 
 
@@ -47,15 +45,12 @@ namespace QDryClean.Api.Controllers
                 Id = userId
             };
             var result = await _mediator.Send(command);
-            if (result)
-                return Ok("User deleted successfully.");
-            return BadRequest("Failed to delete user.");
-
+            return Ok("User deleted successfully.");
         }
 
 
         [HttpGet]
-        [Authorize(Roles = nameof(UserRole.Receptionist))]
+        [Authorize(Roles = $"{nameof(UserRole.Receptionist)},{nameof(UserRole.Admin)}")]
         public async Task<IActionResult> GetAllUsersAsync()
         {
             var users = await _mediator.Send(new GetAllUsersCommand());
@@ -68,9 +63,7 @@ namespace QDryClean.Api.Controllers
         public async Task<IActionResult> UpdateUserAsync(UpdateUserCommand dto)
         {
             var result = await _mediator.Send(dto);
-            if (result)
-                return Ok("User updated successfully.");
-            return BadRequest("Failed to update user.");
+            return Ok(result);
         }
 
 
@@ -79,9 +72,7 @@ namespace QDryClean.Api.Controllers
         {
             var query = new GetByIdUserCommand { Id = userId };
             var user = await _mediator.Send(query);
-            if (user != null)
-                return Ok(user);
-            return NotFound("User not found.");
+            return Ok(user);
         }
     }
 }
