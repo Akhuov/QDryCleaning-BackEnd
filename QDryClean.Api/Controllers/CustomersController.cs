@@ -2,7 +2,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using QDryClean.Application.Dtos;
 using QDryClean.Application.UseCases.Customers.Commands;
 using QDryClean.Domain.Enums;
 
