@@ -60,7 +60,7 @@ namespace QDryClean.Api.Controllers
 
         [HttpPut]
         [Authorize(Roles = nameof(UserRole.Admin))]//now its only for Admin role
-        public async Task<IActionResult> UpdateUserAsync(UpdateUserCommand dto)
+        public async Task<IActionResult> UpdateUserAsync(UserDto dto)
         {
             var result = await _mediator.Send(dto);
             return Ok(result);
