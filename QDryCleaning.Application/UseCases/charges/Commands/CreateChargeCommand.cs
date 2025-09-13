@@ -7,6 +7,6 @@ namespace QDryClean.Application.UseCases.charges.Commands
     {
         public decimal Cost { get; set; }
         public string Name { get; set; }
-        public ItemType? ItemType { get; set; }
+        public ItemType ItemType { get; set; }
     }
 }

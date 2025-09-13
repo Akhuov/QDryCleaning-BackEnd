@@ -1,24 +1,28 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using QDryClean.Application.Absreactions;
 using QDryClean.Application.Common.Interfaces.Services;
+using QDryClean.Application.Dtos;
 using QDryClean.Application.Exceptions;
 using QDryClean.Application.UseCases.Users.Commands;
 using QDryClean.Domain.Entities;
 
 namespace QDryClean.Application.UseCases.Users.Handlers
 {
-    public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, User>
+    public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, UserDto>
     {
         private readonly IApplicationDbContext _applicationDbContext;
         private readonly ICurrentUserService _currentUserService;
-        public UpdateUserCommandHandler(IApplicationDbContext applicationDbContext, ICurrentUserService currentUserService)
+        private IMapper _mapper;
+        public UpdateUserCommandHandler(IApplicationDbContext applicationDbContext, ICurrentUserService currentUserService, IMapper mapper)
         {
             _applicationDbContext = applicationDbContext;
             _currentUserService = currentUserService;
+            _mapper = mapper;
         }
 
-        public async Task<User> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
+        public async Task<UserDto> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
             try
             {
@@ -35,9 +39,13 @@ namespace QDryClean.Application.UseCases.Users.Handlers
 
                     _applicationDbContext.Users.Update(user);
                     await _applicationDbContext.SaveChangesAsync(cancellationToken);
-                    return user;
+                    return _mapper.Map<UserDto>(user);
                 }
                 throw new BadRequestExeption($"User with ID {request.Id} not found.");
+            }
+            catch (BadRequestExeption)
+            {
+                throw;
             }
             catch (Exception ex)
             {
