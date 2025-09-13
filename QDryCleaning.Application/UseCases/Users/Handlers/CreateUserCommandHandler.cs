@@ -1,23 +1,27 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using QDryClean.Application.Absreactions;
 using QDryClean.Application.Common.Interfaces.Services;
+using QDryClean.Application.Dtos;
 using QDryClean.Application.Exceptions;
 using QDryClean.Application.UseCases.Users.Commands;
 using QDryClean.Domain.Entities;
 
 namespace QDryClean.Application.UseCases.Users.Handlers
 {
-    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, User>
+    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, UserDto>
     {
         private readonly IApplicationDbContext _applicationDbContext;
         private readonly ICurrentUserService _currentUserService;
-        public CreateUserCommandHandler(IApplicationDbContext applicationDbContext, ICurrentUserService currentUserService)
+        private IMapper _mapper;
+        public CreateUserCommandHandler(IApplicationDbContext applicationDbContext, ICurrentUserService currentUserService, IMapper mapper)
         {
             _applicationDbContext = applicationDbContext;
             _currentUserService = currentUserService;
+            _mapper = mapper;
         }
-        public async Task<User> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+        public async Task<UserDto> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             try
             {
@@ -33,11 +37,15 @@ namespace QDryClean.Application.UseCases.Users.Handlers
                 };
                 var ExistUser = await _applicationDbContext.Users.FirstOrDefaultAsync(u => u.LogIn == request.LogIn);
                 if (ExistUser is not null)
-                    throw new Exception("User with this login already exists.");
+                    throw new BadRequestExeption("User with this login already exists.");
 
                 await _applicationDbContext.Users.AddAsync(user, cancellationToken);
                 await _applicationDbContext.SaveChangesAsync(cancellationToken);
-                return user;
+                return _mapper.Map<UserDto>(user);
+            }
+            catch (BadRequestExeption)
+            {
+                throw;
             }
             catch (Exception ex)
             {

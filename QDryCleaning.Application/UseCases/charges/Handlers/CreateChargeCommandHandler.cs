@@ -1,23 +1,26 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using QDryClean.Application.Absreactions;
 using QDryClean.Application.Common.Interfaces.Services;
+using QDryClean.Application.Dtos;
 using QDryClean.Application.Exceptions;
-using QDryClean.Application.UseCases.charges.Commands;
+using QDryClean.Application.UseCases.SA.Commands;
 using QDryClean.Domain.Entities;
 
-namespace QDryClean.Application.UseCases.charges.Handlers
+namespace QDryClean.Application.UseCases.SA.Handlers
 {
-    public class CreateChargeCommandHandler : IRequestHandler<CreateChargeCommand, Charge>
+    public class CreateChargeCommandHandler : IRequestHandler<CreateChargeCommand, ChargeDto>
     {
         private readonly IApplicationDbContext _applicationDbContext;
         private readonly ICurrentUserService _currentUserService;
-
-        public CreateChargeCommandHandler(IApplicationDbContext applicationDbContext, ICurrentUserService currentUserService)
+        private IMapper _mapper;
+        public CreateChargeCommandHandler(IApplicationDbContext applicationDbContext, ICurrentUserService currentUserService, IMapper mapper)
         {
             _applicationDbContext = applicationDbContext;
             _currentUserService = currentUserService;
+            _mapper = mapper;
         }
-        public async Task<Charge> Handle(CreateChargeCommand request, CancellationToken cancellationToken)
+        public async Task<ChargeDto> Handle(CreateChargeCommand request, CancellationToken cancellationToken)
         {
             try
             {
@@ -30,7 +33,7 @@ namespace QDryClean.Application.UseCases.charges.Handlers
                 };
                 await _applicationDbContext.Charges.AddAsync(charge, cancellationToken);
                 await _applicationDbContext.SaveChangesAsync(cancellationToken);
-                return charge;
+                return _mapper.Map<ChargeDto>(charge);
             }
             catch (Exception ex)
             {
