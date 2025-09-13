@@ -1,25 +1,28 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using QDryClean.Application.Absreactions;
 using QDryClean.Application.Common.Interfaces.Services;
+using QDryClean.Application.Dtos;
 using QDryClean.Application.Exceptions;
-using QDryClean.Application.UseCases.charges.Commands;
-using QDryClean.Domain.Entities;
+using QDryClean.Application.UseCases.SA.Commands;
 
-namespace QDryClean.Application.UseCases.charges.Handlers
+namespace QDryClean.Application.UseCases.SA.Handlers
 {
-    public class UpdateChargeCommandHandler : IRequestHandler<UpdateChargeCommand, Charge>
+    public class UpdateChargeCommandHandler : IRequestHandler<UpdateChargeCommand, ChargeDto>
     {
         private readonly IApplicationDbContext _applicationDbContext;
         private readonly ICurrentUserService _currentUserService;
+        private IMapper _mapper;
 
-        public UpdateChargeCommandHandler(IApplicationDbContext applicationDbContext, ICurrentUserService currentUserService)
+        public UpdateChargeCommandHandler(IApplicationDbContext applicationDbContext, ICurrentUserService currentUserService,IMapper mapper)
         {
             _applicationDbContext = applicationDbContext;
             _currentUserService = currentUserService;
+            _mapper = mapper;
         }
 
-        public async Task<Charge> Handle(UpdateChargeCommand request, CancellationToken cancellationToken)
+        public async Task<ChargeDto> Handle(UpdateChargeCommand request, CancellationToken cancellationToken)
         {
             try
             {
@@ -33,7 +36,7 @@ namespace QDryClean.Application.UseCases.charges.Handlers
 
                     _applicationDbContext.Charges.Update(charge);
                     await _applicationDbContext.SaveChangesAsync(cancellationToken);
-                    return charge;
+                    return _mapper.Map<ChargeDto>(charge);
                 }
                 throw new BadRequestExeption($"User with ID {request.Id} not found.");
             }

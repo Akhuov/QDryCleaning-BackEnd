@@ -1,13 +1,11 @@
 ﻿using MediatR;
+using QDryClean.Application.Dtos;
 using QDryClean.Domain.Entities;
 
-namespace QDryClean.Application.UseCases.charges.Commands
+namespace QDryClean.Application.UseCases.SA.Commands
 {
-    public class UpdateChargeCommand : IRequest<Charge>
+    public class UpdateChargeCommand : ChargeDto,IRequest<ChargeDto>
     {
         public int Id { get; set; }
-        public decimal Cost { get; set; }
-        public string Name { get; set; }
-        public int? ItemTypeId { get; set; }
     }
 }
