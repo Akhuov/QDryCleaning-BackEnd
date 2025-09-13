@@ -33,7 +33,7 @@ namespace QDryClean.Application.UseCases.Users.Handlers
                     Password = request.Password,
                     UserRole = request.UserRole,
                     CreatedAt = DateTime.UtcNow,
-                    CreatedBy = _currentUserService.UserId
+                    CreatedBy = 1//_currentUserService.UserId
                 };
                 var ExistUser = await _applicationDbContext.Users.FirstOrDefaultAsync(u => u.LogIn == request.LogIn);
                 if (ExistUser is not null)
