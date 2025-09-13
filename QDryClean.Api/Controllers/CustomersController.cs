@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QDryClean.Application.UseCases.Customers.Commands;
+using QDryClean.Application.UseCases.Customers.Querries;
 using QDryClean.Domain.Enums;
 
 namespace QDryClean.Api.Controllers
@@ -40,6 +41,22 @@ namespace QDryClean.Api.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateCustomerAsync(UpdateCustomerCommand command)
         {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllCustomersAsync()
+        {
+            var command = new GetAllCustomersQuerry();
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetByIdCustomerAsync(int id)
+        {
+            var command = new GetByIdCustomerQuerry() { Id = id };
             var result = await _mediator.Send(command);
             return Ok(result);
         }
