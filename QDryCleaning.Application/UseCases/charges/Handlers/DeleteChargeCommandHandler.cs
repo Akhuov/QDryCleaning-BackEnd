@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using QDryClean.Application.Absreactions;
 using QDryClean.Application.Exceptions;
-using QDryClean.Application.UseCases.charges.Commands;
+using QDryClean.Application.UseCases.Charges.Commands;
 
-namespace QDryClean.Application.UseCases.charges.Handlers
+namespace QDryClean.Application.UseCases.Charges.Handlers
 {
     public class DeleteChargeCommandHandler : IRequestHandler<DeleteChargeCommand, bool>
     {

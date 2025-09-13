@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace QDryClean.Application.UseCases.charges.Commands
+namespace QDryClean.Application.UseCases.Charges.Commands
 {
     public class DeleteChargeCommand : IRequest<bool>
     {
