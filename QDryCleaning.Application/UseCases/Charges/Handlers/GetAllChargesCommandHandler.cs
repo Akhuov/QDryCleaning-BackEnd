@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using QDryClean.Application.Absreactions;
-using QDryClean.Application.UseCases.charges.Quarries;
+using QDryClean.Application.UseCases.Charges.Quarries;
 using QDryClean.Domain.Entities;
 
 namespace QDryClean.Application.UseCases.Charges.Handlers
