@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using QDryClean.Application.Absreactions;
 using QDryClean.Application.Common.Interfaces.Services;
@@ -30,15 +31,9 @@ namespace QDryClean.Application.UseCases.Customers.Handlers
                 var customer = await _applicationDbContext.Customers.FirstOrDefaultAsync(u => u.PhoneNumber == request.PhoneNumber, cancellationToken);
                 if (customer is null)
                 {
-                    customer = new Customer()
-                    {
-                        FirstName = request.FirstName,
-                        LastName = request.LastName,
-                        PhoneNumber = request.PhoneNumber,
-                        AdditionalPhoneNumber = request.AdditionalPhoneNumber,
-                        CreatedBy = _currentUserService.UserId,
-                        CreatedAt = DateTime.Now,
-                    };
+                    customer = _mapper.Map<Customer>(request);
+                    customer.CreatedBy = _currentUserService.UserId;
+                    customer.CreatedAt = DateTime.Now;
                     await _applicationDbContext.Customers.AddAsync(customer, cancellationToken);
                     await _applicationDbContext.SaveChangesAsync(cancellationToken);
                     return _mapper.Map<CustomerDto>(customer);
