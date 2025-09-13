@@ -1,7 +1,9 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QDryClean.Application.Dtos;
+using QDryClean.Application.UseCases.Customers.Commands;
 using QDryClean.Application.UseCases.Users.Commands;
 using QDryClean.Application.UseCases.Users.Quarries;
 using QDryClean.Domain.Enums;
@@ -13,25 +15,19 @@ namespace QDryClean.Api.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly IMapper _mapper;
 
-        public UsersController(IMediator mediator)
+        public UsersController(IMediator mediator, IMapper mapper)
         {
             _mediator = mediator;
+            _mapper = mapper;
         }
 
 
         [HttpPost]
         public async Task<IActionResult> CreateUserAsync(UserDto dto)
         {
-            var command = new CreateUserCommand
-            {
-                FirstName = dto.FirstName,
-                LastName = dto.LastName,
-                LogIn = dto.LogIn,
-                Password = dto.Password,
-                UserRole = dto.UserRole,
-            };
-
+            var command = _mapper.Map<CreateCustomerCommand>(dto);
             var result = await _mediator.Send(command);
             return Created("User created successfully.",result);
         }
@@ -60,9 +56,11 @@ namespace QDryClean.Api.Controllers
 
         [HttpPut]
         [Authorize(Roles = nameof(UserRole.Admin))]//now its only for Admin role
-        public async Task<IActionResult> UpdateUserAsync(UserDto dto)
+        public async Task<IActionResult> UpdateUserAsync(int id,UserDto dto)
         {
-            var result = await _mediator.Send(dto);
+            var command = _mapper.Map<UpdateUserCommand>(dto);
+            command.Id = id;
+            var result = await _mediator.Send(command);
             return Ok(result);
         }
 
