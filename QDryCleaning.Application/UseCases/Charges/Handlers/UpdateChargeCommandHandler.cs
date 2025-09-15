@@ -9,18 +9,12 @@ using QDryClean.Application.UseCases.Charges.Commands;
 
 namespace QDryClean.Application.UseCases.Charges.Handlers
 {
-    public class UpdateChargeCommandHandler : IRequestHandler<UpdateChargeCommand, ChargeDto>
+    public class UpdateChargeCommandHandler : CommandHandlerBase, IRequestHandler<UpdateChargeCommand, ChargeDto>
     {
-        private readonly IApplicationDbContext _applicationDbContext;
-        private readonly ICurrentUserService _currentUserService;
-        private IMapper _mapper;
-
-        public UpdateChargeCommandHandler(IApplicationDbContext applicationDbContext, ICurrentUserService currentUserService,IMapper mapper)
-        {
-            _applicationDbContext = applicationDbContext;
-            _currentUserService = currentUserService;
-            _mapper = mapper;
-        }
+        public UpdateChargeCommandHandler(
+           IApplicationDbContext applicationDbContext,
+           ICurrentUserService currentUserService,
+           IMapper mapper) : base(applicationDbContext, currentUserService, mapper) { }
 
         public async Task<ChargeDto> Handle(UpdateChargeCommand request, CancellationToken cancellationToken)
         {
