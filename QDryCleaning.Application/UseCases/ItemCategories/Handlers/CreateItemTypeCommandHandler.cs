@@ -30,7 +30,11 @@ namespace QDryClean.Application.UseCases.ItemCategories.Handlers
                 var itemCategory = await _applicationDbContext.ItemCategories.FirstOrDefaultAsync(u => u.Name == request.Name, cancellationToken);
                 if (itemCategory is null)
                 {
-                    itemCategory = new ItemCategory() { Name = request.Name };
+                    itemCategory = new ItemCategory() { 
+                        Name = request.Name,
+                        CreatedBy = _currentUserService.UserId,
+                        CreatedAt = DateTime.Now
+                    };
                     await _applicationDbContext.ItemCategories.AddAsync(itemCategory, cancellationToken);
                     await _applicationDbContext.SaveChangesAsync(cancellationToken);
                     return new ItemCategoryDto() { Id = itemCategory.Id, Name = itemCategory.Name };

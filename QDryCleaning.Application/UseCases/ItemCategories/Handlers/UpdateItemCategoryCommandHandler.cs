@@ -24,6 +24,9 @@ namespace QDryClean.Application.UseCases.ItemCategories.Handlers
                 if (itemCategory is not null)
                 {
                     itemCategory.Name = request.Name;
+                    itemCategory.UpdatedBy = _currentUserService.UserId;
+                    itemCategory.UpdatedAt = DateTime.Now;
+
                     _applicationDbContext.ItemCategories.Update(itemCategory);
                     await _applicationDbContext.SaveChangesAsync(cancellationToken);
                     return new ItemCategoryDto() { Id = itemCategory.Id, Name = itemCategory.Name };
