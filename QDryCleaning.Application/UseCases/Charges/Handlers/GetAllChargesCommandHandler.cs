@@ -24,9 +24,9 @@ namespace QDryClean.Application.UseCases.Charges.Handlers
                 var charges = await _applicationDbContext.Charges.ToListAsync();
 
                 var list_of_chargesDtos = new List<ChargeDto>();
-                foreach (var customer in charges)
+                foreach (var charge in charges)
                 {
-                    list_of_chargesDtos.Add(_mapper.Map<ChargeDto>(charges));
+                    list_of_chargesDtos.Add(_mapper.Map<ChargeDto>(charge));
                 }
 
                 return list_of_chargesDtos;
