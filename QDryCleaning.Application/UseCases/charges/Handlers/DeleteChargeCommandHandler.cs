@@ -1,21 +1,21 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using QDryClean.Application.Absreactions;
+using QDryClean.Application.Common.Interfaces.Services;
 using QDryClean.Application.Exceptions;
 using QDryClean.Application.UseCases.Charges.Commands;
 
 namespace QDryClean.Application.UseCases.Charges.Handlers
 {
-    public class DeleteChargeCommandHandler : IRequestHandler<DeleteChargeCommand, bool>
+    public class DeleteChargeCommandHandler : CommandHandlerBase,IRequestHandler<DeleteChargeCommand, string>
     {
-        private readonly IApplicationDbContext _applicationDbContext;
+        public DeleteChargeCommandHandler(
+            IApplicationDbContext applicationDbContext,
+            ICurrentUserService currentUserService,
+            IMapper mapper) : base(applicationDbContext, currentUserService, mapper) { }
 
-        public DeleteChargeCommandHandler(IApplicationDbContext applicationDbContext)
-        {
-            _applicationDbContext = applicationDbContext;
-        }
-
-        public async Task<bool> Handle(DeleteChargeCommand request, CancellationToken cancellationToken)
+        public async Task<string> Handle(DeleteChargeCommand request, CancellationToken cancellationToken)
         {
             try
             {
@@ -24,9 +24,16 @@ namespace QDryClean.Application.UseCases.Charges.Handlers
                 {
                     _applicationDbContext.Charges.Remove(charge);
                     await _applicationDbContext.SaveChangesAsync(cancellationToken);
-                    return true;
+                    return $"Charge {charge.Name} Deleted Succesfully!";
                 }
-                return false;
+                else
+                {
+                    throw new BadRequestExeption($"Charge with ID {request.Id} not found.");
+                }
+            }
+            catch (BadRequestExeption)
+            {
+                throw;
             }
             catch (Exception ex)
             {
