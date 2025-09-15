@@ -1,26 +1,26 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using QDryClean.Application.UseCases.Customers.Commands;
-using QDryClean.Application.UseCases.Customers.Querries;
+using QDryClean.Application.UseCases.ItemCategories.Commands;
+using QDryClean.Application.UseCases.ItemCategories.Querries;
 using QDryClean.Domain.Enums;
 
 namespace QDryClean.Api.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class CustomersController : ControllerBase
+    public class ItemCategoriesController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public CustomersController(IMediator mediator)
+        public ItemCategoriesController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
         [Authorize(Roles = $"{nameof(UserRole.Receptionist)},{nameof(UserRole.Admin)}")]
         [HttpPost]
-        public async Task<IActionResult> CreateCustomerAsync(CreateCustomerCommand command)
+        public async Task<IActionResult> CreateItemCategoryAsync(CreateItemCategoryCommand command)
         {
             var result = await _mediator.Send(command);
             return Created("User created successfully.", result);
@@ -28,7 +28,7 @@ namespace QDryClean.Api.Controllers
 
         [Authorize(Roles = $"{nameof(UserRole.Receptionist)},{nameof(UserRole.Admin)}")]
         [HttpDelete]
-        public async Task<IActionResult> DeleteCustomerAsync(DeleteCustomerCommand command)
+        public async Task<IActionResult> DeleteItemCategoryAsync(DeleteItemCategoryCommand command)
         {
             var result = await _mediator.Send(command);
             return Ok(result);
@@ -36,24 +36,24 @@ namespace QDryClean.Api.Controllers
 
         [Authorize(Roles = $"{nameof(UserRole.Receptionist)},{nameof(UserRole.Admin)}")]
         [HttpPut]
-        public async Task<IActionResult> UpdateCustomerAsync(UpdateCustomerCommand command)
+        public async Task<IActionResult> UpdateItemCategoryAsync(UpdateItemCategoryCommand command)
         {
             var result = await _mediator.Send(command);
             return Ok(result);
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllCustomersAsync()
+        public async Task<IActionResult> GetAllItemCategoriesAsync()
         {
-            var command = new GetAllCustomersQuerry();
+            var command = new GetAllItemCategoriesQuerry();
             var result = await _mediator.Send(command);
             return Ok(result);
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetByIdCustomerAsync(int id)
+        public async Task<IActionResult> GetByIdItemCategoryAsync(int id)
         {
-            var command = new GetByIdCustomerQuerry() { Id = id };
+            var command = new GetByIdItemCategoryQuerry() { Id = id };
             var result = await _mediator.Send(command);
             return Ok(result);
         }
