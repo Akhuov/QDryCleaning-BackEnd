@@ -28,6 +28,8 @@ namespace QDryClean.Application.UseCases.Customers.Handlers
                     customer.PhoneNumber = request.PhoneNumber;
                     customer.AdditionalPhoneNumber = request.AdditionalPhoneNumber;
                     customer.Points = request.Points;
+                    customer.UpdatedAt = DateTime.Now;
+                    customer.UpdatedBy = _currentUserService.UserId;
 
                     _applicationDbContext.Customers.Update(customer);
                     await _applicationDbContext.SaveChangesAsync(cancellationToken);
