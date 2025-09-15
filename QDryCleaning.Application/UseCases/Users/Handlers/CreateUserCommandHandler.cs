@@ -10,17 +10,13 @@ using QDryClean.Domain.Entities;
 
 namespace QDryClean.Application.UseCases.Users.Handlers
 {
-    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, UserDto>
+    public class CreateUserCommandHandler : CommandHandlerBase, IRequestHandler<CreateUserCommand, UserDto>
     {
-        private readonly IApplicationDbContext _applicationDbContext;
-        private readonly ICurrentUserService _currentUserService;
-        private IMapper _mapper;
-        public CreateUserCommandHandler(IApplicationDbContext applicationDbContext, ICurrentUserService currentUserService, IMapper mapper)
-        {
-            _applicationDbContext = applicationDbContext;
-            _currentUserService = currentUserService;
-            _mapper = mapper;
-        }
+
+        public CreateUserCommandHandler(
+            IApplicationDbContext applicationDbContext,
+            ICurrentUserService currentUserService,
+            IMapper mapper) : base(applicationDbContext, currentUserService, mapper) { }
         public async Task<UserDto> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             try
