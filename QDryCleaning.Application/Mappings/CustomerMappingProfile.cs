@@ -15,7 +15,6 @@ namespace QDryClean.Application.Mappings
 
             CreateMap<CustomerDto, UpdateCustomerCommand>().ReverseMap();
 
-            // DTO -> Entity
             CreateMap<CreateCustomerCommand, Customer>()
                 .ForMember(dest => dest.Orders, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())

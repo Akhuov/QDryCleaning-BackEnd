@@ -5,8 +5,5 @@ using QDryClean.Domain.Enums;
 
 namespace QDryClean.Application.UseCases.Users.Commands
 {
-    public class UpdateUserCommand : UserDto,IRequest<UserDto>
-    {
-        public int Id { get; set; }
-    }
+    public class UpdateUserCommand : UserDto, IRequest<UserDto> { }
 }

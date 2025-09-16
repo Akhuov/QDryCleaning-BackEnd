@@ -6,14 +6,14 @@ using QDryClean.Infrastructure.Services.JWT;
 
 namespace QDryClean.Api.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     [ApiController]
-    public class AuthsController : ControllerBase
+    public class AuthController : ControllerBase
     {
         private readonly IApplicationDbContext _context;
         private readonly ITokenService _tokenService;
         private readonly IAuthService _authService;
-        public AuthsController(IApplicationDbContext context, ITokenService tokenService, IAuthService authService)
+        public AuthController(IApplicationDbContext context, ITokenService tokenService, IAuthService authService)
         {
             _context = context;
             _tokenService = tokenService;
