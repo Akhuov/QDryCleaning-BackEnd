@@ -26,7 +26,7 @@ namespace QDryClean.Application.UseCases.Users.Handlers
                 {
                     user.FirstName = request.FirstName;
                     user.LastName = request.LastName;
-                    user.LogIn = request.LogIn;
+                    user.LogIn = request.Login;
                     user.Password = request.Password;
                     user.UserRole = request.UserRole;
                     user.UpdatedAt = DateTime.UtcNow;
