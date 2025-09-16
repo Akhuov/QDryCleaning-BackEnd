@@ -25,13 +25,13 @@ namespace QDryClean.Application.UseCases.Users.Handlers
                 {
                     FirstName = request.FirstName,
                     LastName = request.LastName,
-                    LogIn = request.LogIn,
+                    LogIn = request.Login,
                     Password = request.Password,
                     UserRole = request.UserRole,
                     CreatedAt = DateTime.UtcNow,
                     CreatedBy = _currentUserService.UserId
                 };
-                var ExistUser = await _applicationDbContext.Users.FirstOrDefaultAsync(u => u.LogIn == request.LogIn);
+                var ExistUser = await _applicationDbContext.Users.FirstOrDefaultAsync(u => u.LogIn == request.Login);
                 if (ExistUser is not null)
                     throw new BadRequestExeption("User with this login already exists.");
 
