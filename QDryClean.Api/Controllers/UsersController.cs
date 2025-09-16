@@ -2,15 +2,13 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using QDryClean.Application.Dtos;
-using QDryClean.Application.UseCases.Customers.Commands;
 using QDryClean.Application.UseCases.Users.Commands;
 using QDryClean.Application.UseCases.Users.Quarries;
 using QDryClean.Domain.Enums;
 
 namespace QDryClean.Api.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
     {
@@ -25,15 +23,17 @@ namespace QDryClean.Api.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> CreateUserAsync(UserDto dto)
+        [Authorize(Roles = nameof(UserRole.Admin))]
+        public async Task<IActionResult> CreateUserAsync(CreateUserCommand command)
         {
-            var command = _mapper.Map<CreateCustomerCommand>(dto);
             var result = await _mediator.Send(command);
-            return Created("User created successfully.",result);
+            return Created("User created successfully.", result);
         }
 
 
         [HttpDelete]
+        [Authorize(Roles = nameof(UserRole.Admin))]
+
         public async Task<IActionResult> DeleteUserAsync(int userId)
         {
             var command = new DeleteUserCommand
@@ -45,23 +45,20 @@ namespace QDryClean.Api.Controllers
         }
 
 
+        [HttpPut]
+        [Authorize(Roles = nameof(UserRole.Admin))]
+        public async Task<IActionResult> UpdateUserAsync(UpdateUserCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+
         [HttpGet]
-        [Authorize(Roles = $"{nameof(UserRole.Receptionist)},{nameof(UserRole.Admin)}")]
         public async Task<IActionResult> GetAllUsersAsync()
         {
             var users = await _mediator.Send(new GetAllUsersCommand());
             return Ok(users);
-        }
-
-
-        [HttpPut]
-        [Authorize(Roles = nameof(UserRole.Admin))]//now its only for Admin role
-        public async Task<IActionResult> UpdateUserAsync(int id,UserDto dto)
-        {
-            var command = _mapper.Map<UpdateUserCommand>(dto);
-            command.Id = id;
-            var result = await _mediator.Send(command);
-            return Ok(result);
         }
 
 
