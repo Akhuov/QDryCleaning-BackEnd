@@ -49,7 +49,7 @@ namespace QDryClean.Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{userId:int}")]
+        [HttpGet("ChargeId")]
         public async Task<IActionResult> GetByIdChargeAsync(int id)
         {
             var command = new GetByIdChargeCommand() { Id = id };
