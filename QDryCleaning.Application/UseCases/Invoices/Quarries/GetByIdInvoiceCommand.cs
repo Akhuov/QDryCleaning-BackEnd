@@ -5,6 +5,6 @@ namespace QDryClean.Application.UseCases.Invoices.Quarries
 {
     public class GetByIdInvoiceCommand : IRequest<InvoiceDto>
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
     }
 }
