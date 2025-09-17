@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <Folder Include="UseCases\Invoices\Handlers\" />
-    <Folder Include="UseCases\Invoices\Quarries\" />
   </ItemGroup>
 
 </Project>
