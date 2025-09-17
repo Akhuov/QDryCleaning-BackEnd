@@ -2,7 +2,7 @@
 
 namespace QDryClean.Application.Dtos
 {
-    public class InvoiceDTO
+    public class InvoiceDto
     {
         public int Id { get; set; }
         public required decimal TotalCost { get; set; }
