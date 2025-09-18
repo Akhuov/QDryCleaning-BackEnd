@@ -1,13 +1,7 @@
 ﻿using AutoMapper;
 using QDryClean.Application.Dtos;
 using QDryClean.Application.UseCases.Orders.Commands;
-using QDryClean.Application.UseCases.Users.Commands;
 using QDryClean.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QDryClean.Application.Mappings
 {
@@ -19,7 +13,10 @@ namespace QDryClean.Application.Mappings
 
             CreateMap<CreateOrderCommand, OrderDto>().ReverseMap();
 
-            CreateMap<UserDto, User>()
+            CreateMap<OrderDto, Order>()
+                .ForMember(dest => dest.ReceiptNumber, opt => opt.Ignore())
+                .ForMember(dest => dest.Items, opt => opt.Ignore())
+                .ForMember(dest => dest.Invoice, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
                 .ForMember(dest => dest.UpdatedBy, opt => opt.Ignore())
