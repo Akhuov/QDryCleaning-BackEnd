@@ -1,10 +1,14 @@
 ﻿using MediatR;
 using QDryClean.Application.Dtos;
-using QDryClean.Domain.Entities;
+using QDryClean.Domain.Enums;
 
 namespace QDryClean.Application.UseCases.Orders.Commands
 {
-    public class CreateOrderCommand : OrderDto, IRequest<OrderDto>
+    public class CreateOrderCommand : IRequest<OrderDto>
     {
+        public required ProcessStatus ProcessStatus { get; set; }
+        public required DateOnly ExpectedCompletionDate { get; set; }
+        public int CustomerId { get; set; }
+        public string? Notes { get; set; }
     }
 }
