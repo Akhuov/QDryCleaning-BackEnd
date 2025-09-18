@@ -6,6 +6,7 @@ namespace QDryClean.Application.Dtos
 {
     public class OrderDto
     {
+        public int Id { get; set; } 
         public required int ReceiptNumber { get; set; }
         public required ProcessStatus ProcessStatus { get; set; }
         public required DateOnly ExpectedCompletionDate { get; set; }

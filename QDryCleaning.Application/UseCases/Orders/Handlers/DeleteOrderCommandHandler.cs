@@ -4,31 +4,30 @@ using Microsoft.EntityFrameworkCore;
 using QDryClean.Application.Absreactions;
 using QDryClean.Application.Common.Interfaces.Services;
 using QDryClean.Application.Exceptions;
-using QDryClean.Application.UseCases.Invoices.Commands;
+using QDryClean.Application.UseCases.Orders.Commands;
 
-namespace QDryClean.Application.UseCases.Invoices.Handlers
+namespace QDryClean.Application.UseCases.Orders.Handlers
 {
-    public class DeleteInvoiceCommandHandler : CommandHandlerBase, IRequestHandler<DeleteInvoiceCommand, string>
+    public class DeleteOrderCommandHandler : CommandHandlerBase, IRequestHandler<DeleteOrderCommand, string>
     {
-        public DeleteInvoiceCommandHandler(
+        public DeleteOrderCommandHandler(
             IApplicationDbContext applicationDbContext,
             ICurrentUserService currentUserService,
             IMapper mapper) : base(applicationDbContext, currentUserService, mapper) { }
-
-        public async Task<string> Handle(DeleteInvoiceCommand request, CancellationToken cancellationToken)
+        public async Task<string> Handle(DeleteOrderCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var invoice = await _applicationDbContext.OrderInvoices.FirstOrDefaultAsync(u => u.Id == request.Id, cancellationToken);
-                if (invoice is not null)
+                var order = await _applicationDbContext.Orders.FirstOrDefaultAsync(u => u.Id == request.Id, cancellationToken);
+                if (order is not null)
                 {
-                    _applicationDbContext.OrderInvoices.Remove(invoice);
+                    _applicationDbContext.Orders.Remove(order);
                     await _applicationDbContext.SaveChangesAsync(cancellationToken);
-                    return $"Invoice {invoice.Id} Deleted Succesfully!";
+                    return $"Order {order.Id} Deleted Succesfully!";
                 }
                 else
                 {
-                    throw new BadRequestExeption($"Invoice with ID {request.Id} not found.");
+                    throw new BadRequestExeption($"Order with ID {request.Id} not found.");
                 }
             }
             catch (BadRequestExeption)
