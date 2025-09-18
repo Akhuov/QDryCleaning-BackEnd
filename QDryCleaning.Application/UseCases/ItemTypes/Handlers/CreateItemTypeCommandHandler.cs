@@ -26,7 +26,7 @@ namespace QDryClean.Application.UseCases.ItemTypes.Handlers
                     throw new BadRequestExeption("Name field is required!");
                 }
 
-                var itemType = await _applicationDbContext.ItemTypes.FirstOrDefaultAsync(u => u.Id == request.Id, cancellationToken);
+                var itemType = await _applicationDbContext.ItemTypes.FirstOrDefaultAsync(u => u.Name == request.Name, cancellationToken);
                 if (itemType is null)
                 {
                     itemType = _mapper.Map<ItemType>(request);
