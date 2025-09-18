@@ -12,11 +12,17 @@ namespace QDryClean.Application.Mappings
             CreateMap<Order, OrderDto>();
 
             CreateMap<CreateOrderCommand, OrderDto>().ReverseMap();
-
-            CreateMap<OrderDto, Order>()
+            CreateMap<CreateOrderCommand, Order>()
                 .ForMember(dest => dest.ReceiptNumber, opt => opt.Ignore())
                 .ForMember(dest => dest.Items, opt => opt.Ignore())
                 .ForMember(dest => dest.Invoice, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
+                .ForMember(dest => dest.UpdatedBy, opt => opt.Ignore())
+                .ForMember(dest => dest.UpdatedAt, opt => opt.Ignore());
+
+            CreateMap<OrderDto, Order>()
+                .ForMember(dest => dest.ReceiptNumber, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
                 .ForMember(dest => dest.UpdatedBy, opt => opt.Ignore())
