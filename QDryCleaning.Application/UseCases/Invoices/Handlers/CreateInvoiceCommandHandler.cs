@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using QDryClean.Application.Absreactions;
 using QDryClean.Application.Common.Interfaces.Services;
 using QDryClean.Application.Dtos;
@@ -20,18 +19,10 @@ namespace QDryClean.Application.UseCases.Invoices.Handlers
         {
             try
             {
-                var invoice = await _applicationDbContext.OrderInvoices.FirstOrDefaultAsync(u => u.Id == request.Id, cancellationToken);
-                if (invoice is null)
-                {
-                    invoice = _mapper.Map<Invoice>(request);
-                    await _applicationDbContext.OrderInvoices.AddAsync(invoice, cancellationToken);
-                    await _applicationDbContext.SaveChangesAsync(cancellationToken);
-                    return _mapper.Map<InvoiceDto>(invoice);
-                }
-                else
-                {
-                    throw new BadRequestExeption("Invoice with this id already exists");
-                }
+                var invoice = _mapper.Map<Invoice>(request);
+                await _applicationDbContext.OrderInvoices.AddAsync(invoice, cancellationToken);
+                await _applicationDbContext.SaveChangesAsync(cancellationToken);
+                return _mapper.Map<InvoiceDto>(invoice);
             }
             catch (BadRequestExeption)
             {
