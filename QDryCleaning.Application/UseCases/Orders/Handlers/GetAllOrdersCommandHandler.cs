@@ -19,7 +19,11 @@ namespace QDryClean.Application.UseCases.Orders.Handlers
         {
             try
             {
-                var orders = await _applicationDbContext.Orders.ToListAsync();
+                var orders = await _applicationDbContext.Orders
+                    .Include(o => o.Customer)
+                    .Include(o => o.Invoice)
+                    .Include(o => o.Items)
+                    .ToListAsync();
 
                 var list_of_orderDtos = new List<OrderDto>();
                 foreach (var invoice in orders)

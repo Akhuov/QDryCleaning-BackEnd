@@ -19,7 +19,11 @@ namespace QDryClean.Application.UseCases.Orders.Handlers
         {
             try
             {
-                var order = await _applicationDbContext.Orders.FirstOrDefaultAsync(u => u.Id == request.Id, cancellationToken);
+                var order = await _applicationDbContext.Orders
+                    .Include(o => o.Customer)
+                    .Include(o => o.Invoice)
+                    .Include(o => o.Items)
+                    .FirstOrDefaultAsync(u => u.Id == request.Id, cancellationToken);
                 return _mapper.Map<OrderDto>(order);
 
             }
