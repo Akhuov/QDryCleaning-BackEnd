@@ -68,6 +68,17 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:5173") // порт твоего фронта
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
 
 var app = builder.Build();
 
@@ -86,6 +97,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseAuthentication();//Its for JWT Token and Authorization must be before UseAuthorization
 app.UseAuthorization();
+app.UseCors("AllowReactApp");
 
 app.MapControllers();
 

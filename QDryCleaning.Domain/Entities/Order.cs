@@ -10,7 +10,7 @@ namespace QDryClean.Domain.Entities
         public int CustomerId { get; set; }
         public Customer Customer { get; set; }
         public Invoice Invoice { get; set; }
-        public string Notes { get; set; } = null;
+        public string? Notes { get; set; }
         public ICollection<Item> Items { get; set; } = new List<Item>();
     }
 }

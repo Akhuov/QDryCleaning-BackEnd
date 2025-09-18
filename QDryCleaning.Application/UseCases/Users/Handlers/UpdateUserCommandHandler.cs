@@ -1,20 +1,23 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using QDryClean.Application.Absreactions;
+using QDryClean.Application.Common.Interfaces.Services;
+using QDryClean.Application.Dtos;
+using QDryClean.Application.Exceptions;
 using QDryClean.Application.UseCases.Users.Commands;
+using QDryClean.Domain.Entities;
 
 namespace QDryClean.Application.UseCases.Users.Handlers
 {
-    public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, bool>
+    public class UpdateUserCommandHandler : CommandHandlerBase ,IRequestHandler<UpdateUserCommand, UserDto>
     {
-        private readonly IApplicationDbContext _applicationDbContext;
+        public UpdateUserCommandHandler(
+            IApplicationDbContext applicationDbContext,
+            ICurrentUserService currentUserService,
+            IMapper mapper) : base(applicationDbContext, currentUserService, mapper) { }
 
-        public UpdateUserCommandHandler(IApplicationDbContext applicationDbContext)
-        {
-            _applicationDbContext = applicationDbContext;
-        }
-
-        public async Task<bool> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
+        public async Task<UserDto> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
             try
             {
@@ -23,20 +26,25 @@ namespace QDryClean.Application.UseCases.Users.Handlers
                 {
                     user.FirstName = request.FirstName;
                     user.LastName = request.LastName;
-                    user.LogIn = request.LogIn;
+                    user.LogIn = request.Login;
                     user.Password = request.Password;
                     user.UserRole = request.UserRole;
                     user.UpdatedAt = DateTime.UtcNow;
+                    user.UpdatedBy = _currentUserService.UserId;
 
                     _applicationDbContext.Users.Update(user);
                     await _applicationDbContext.SaveChangesAsync(cancellationToken);
-                    return true;
+                    return _mapper.Map<UserDto>(user);
                 }
-                return false;
+                throw new BadRequestExeption($"User with ID {request.Id} not found.");
             }
-            catch (Exception)
+            catch (BadRequestExeption)
             {
-                return false;
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new InternalServerExeption(ex.Message);
             }
         }
     }

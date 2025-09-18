@@ -12,8 +12,8 @@ using QDryClean.Infrastructure.Persistance;
 namespace QDryClean.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250908065810_Init")]
-    partial class Init
+    [Migration("20250913090427_makeNotNullableDecimalValues")]
+    partial class makeNotNullableDecimalValues
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,6 +46,7 @@ namespace QDryClean.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedAt")
@@ -77,12 +78,14 @@ namespace QDryClean.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Points")
@@ -108,7 +111,7 @@ namespace QDryClean.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<decimal?>("Discount")
+                    b.Property<decimal>("Discount")
                         .HasPrecision(6)
                         .HasColumnType("decimal(6,0)");
 
@@ -192,6 +195,7 @@ namespace QDryClean.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedAt")
@@ -226,6 +230,7 @@ namespace QDryClean.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedAt")
@@ -306,15 +311,18 @@ namespace QDryClean.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LogIn")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedAt")
@@ -413,7 +421,8 @@ namespace QDryClean.Infrastructure.Migrations
 
             modelBuilder.Entity("QDryClean.Domain.Entities.Order", b =>
                 {
-                    b.Navigation("Invoice");
+                    b.Navigation("Invoice")
+                        .IsRequired();
 
                     b.Navigation("Items");
                 });

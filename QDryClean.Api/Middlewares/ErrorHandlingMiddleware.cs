@@ -30,6 +30,7 @@ public class ErrorHandlingMiddleware
             context.Response.StatusCode = ex switch
             {
                 NotFoundException => StatusCodes.Status404NotFound,
+                BadRequestExeption => StatusCodes.Status400BadRequest,
                 _ => StatusCodes.Status500InternalServerError
             };
 
